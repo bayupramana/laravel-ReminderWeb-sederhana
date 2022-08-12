@@ -5,13 +5,14 @@ const isReminders = (reminders) => {
                 <div className="card-body" >
                     <h1 className="card-title">
                         {data.nama_kegiatan}
-                        <div className="badge badge-primary">NEW</div>
                     </h1>
                     <p>{data.deskripsi_kegiatan}</p>
-                    <p>{data.tempat}</p>
-                    <p>{data.waktu_kegiatan}</p>
+                    <div>
+                        <h2>{data.tempat}</h2>
+                    </div>
                     <div className="card-actions justify-end">
                         <div className="badge badge-inline">{data.penyelenggara}</div>
+                        <div className="badge badge-outline">{data.waktu_kegiatan}</div>
                     </div>
                 </div>
             </div>
@@ -28,11 +29,23 @@ const noReminders = () => {
     )
 }
 
-const ReminderList = ({reminders}) => {
-    if(!reminders) {
-        return noReminders()
+const noLogin = () => {
+    return (
+        <div className="flex justify-center text-3xl text-black">
+            <h1>Silahkan Login untuk melihat agenda anda</h1>
+        </div>
+    )
+}
+
+const ReminderList = ({reminders, user}) => {
+    if(!user) {
+        return noLogin()
     } else {
-        return isReminders(reminders)
+        if(!reminders) {
+            return noReminders()
+        } else {
+            return isReminders(reminders)
+        }
     }
 }
 export default ReminderList
